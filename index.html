@@ -1,467 +1,166 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Harran'ın Yıldız Çocukları: Tarihin Unuttuğu Din</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg-deep: #0a0a0f;
-    --bg-section: #0f0f18;
-    --gold: #c9a84c;
-    --gold-light: #e8d5a0;
-    --gold-dim: #7a6a3a;
-    --cream: #f0e6d0;
-    --cream-dim: #b8a88a;
-    --text: #d4cfc5;
-    --text-dim: #8a8578;
-    --accent-blue: #3a5a8a;
-    --accent-teal: #2a6a6a;
-    --red: #8a3a3a;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg-deep);
-    color: var(--text);
-    font-family: 'Crimson Pro', Georgia, serif;
-    font-size: 19px;
-    line-height: 1.85;
-    overflow-x: hidden;
-  }
-
-  /* ── HERO ── */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 600px 600px at 50% 30%, rgba(201,168,76,0.08), transparent),
-      radial-gradient(ellipse 400px 400px at 20% 70%, rgba(58,90,138,0.06), transparent),
-      radial-gradient(ellipse 300px 300px at 80% 60%, rgba(42,106,106,0.05), transparent);
-    z-index: 1;
-  }
-
-  .stars-canvas {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-  }
-
-  .star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: var(--gold-light);
-    border-radius: 50%;
-    animation: twinkle var(--dur) ease-in-out infinite alternate;
-    opacity: 0;
-  }
-
-  @keyframes twinkle {
-    0% { opacity: 0.1; transform: scale(0.8); }
-    100% { opacity: var(--max-op); transform: scale(1.2); }
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 800px;
-    padding: 2rem;
-    animation: fadeUp 1.5s ease-out forwards;
-    opacity: 0;
-  }
-
-  @keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-    from { opacity: 0; transform: translateY(40px); }
-  }
-
-  .hero-kicker {
-    font-family: 'Crimson Pro', serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.5rem;
-    font-weight: 500;
-  }
-
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.4rem, 6vw, 4.2rem);
-    font-weight: 900;
-    color: var(--cream);
-    line-height: 1.15;
-    margin-bottom: 1.5rem;
-  }
-
-  .hero h1 em {
-    font-style: italic;
-    color: var(--gold);
-  }
-
-  .hero-sub {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.25rem;
-    color: var(--cream-dim);
-    font-style: italic;
-    max-width: 600px;
-    margin: 0 auto 2.5rem;
-    line-height: 1.6;
-  }
-
-  .scroll-hint {
-    display: inline-block;
-    width: 1px;
-    height: 50px;
-    background: linear-gradient(to bottom, var(--gold), transparent);
-    animation: pulse-down 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse-down {
-    0%, 100% { opacity: 0.3; transform: scaleY(1); }
-    50% { opacity: 1; transform: scaleY(1.3); }
-  }
-
-  /* ── ARTICLE ── */
-  .article-body {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 0 2rem 6rem;
-  }
-
-  .section {
-    margin-bottom: 4rem;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-
-  .section.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .section-number {
-    font-family: 'Playfair Display', serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.3em;
-    color: var(--gold-dim);
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-    display: block;
-  }
-
-  h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-    font-weight: 700;
-    color: var(--cream);
-    line-height: 1.25;
-    margin-bottom: 1.5rem;
-  }
-
-  p {
-    margin-bottom: 1.4rem;
-    font-weight: 300;
-  }
-
-  .lead {
-    font-size: 1.15rem;
-    color: var(--cream-dim);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    line-height: 1.7;
-  }
-
-  strong {
-    color: var(--cream);
-    font-weight: 600;
-  }
-
-  /* ── PULL QUOTE ── */
-  .pull-quote {
-    position: relative;
-    margin: 3rem 0;
-    padding: 2rem 2.5rem;
-    border-left: 2px solid var(--gold-dim);
-    background: linear-gradient(135deg, rgba(201,168,76,0.03), transparent);
-  }
-
-  .pull-quote p {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.35rem;
-    font-style: italic;
-    color: var(--gold-light);
-    line-height: 1.6;
-    margin-bottom: 0.5rem;
-  }
-
-  .pull-quote cite {
-    font-family: 'Crimson Pro', serif;
-    font-size: 0.85rem;
-    color: var(--text-dim);
-    font-style: normal;
-    letter-spacing: 0.05em;
-  }
-
-  /* ── SEPARATOR ── */
-  .sep {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin: 3.5rem 0;
-    color: var(--gold-dim);
-    font-size: 0.7rem;
-    letter-spacing: 0.5em;
-  }
-
-  .sep::before, .sep::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
-  }
-
-  /* ── INFO BOX ── */
-  .info-box {
-    background: rgba(201,168,76,0.04);
-    border: 1px solid rgba(201,168,76,0.12);
-    border-radius: 2px;
-    padding: 1.8rem 2rem;
-    margin: 2.5rem 0;
-  }
-
-  .info-box-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    color: var(--gold);
-    margin-bottom: 0.8rem;
-    font-weight: 700;
-  }
-
-  .info-box p {
-    font-size: 0.95rem;
-    margin-bottom: 0.8rem;
-    color: var(--text-dim);
-  }
-
-  .info-box p:last-child { margin-bottom: 0; }
-
-  /* ── FOOTER ── */
-  .article-footer {
-    text-align: center;
-    padding: 3rem 2rem 5rem;
-    border-top: 1px solid rgba(201,168,76,0.1);
-    max-width: 720px;
-    margin: 0 auto;
-  }
-
-  .article-footer p {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    color: var(--text-dim);
-    font-style: italic;
-  }
-
-  /* ── MOON GLYPH ── */
-  .moon-glyph {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    border: 2px solid var(--gold-dim);
-    border-radius: 50%;
-    position: relative;
-    margin-bottom: 1rem;
-  }
-
-  .moon-glyph::after {
-    content: '';
-    position: absolute;
-    top: 3px;
-    right: 2px;
-    width: 28px;
-    height: 28px;
-    background: var(--bg-deep);
-    border-radius: 50%;
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 640px) {
-    body { font-size: 17px; }
-    .article-body { padding: 0 1.2rem 4rem; }
-    .pull-quote { padding: 1.5rem; margin: 2rem 0; }
-    .hero-content { padding: 1.5rem; }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marka Vekili Bülten Tarama Asistanı — Nihai Tanım</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --muted: #94a3b8;
+      --text: #e5e7eb;
+      --accent: #22c55e;
+      --accent2: #38bdf8;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: linear-gradient(180deg, #020617, var(--bg));
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .container { max-width: 980px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+    header { margin-bottom: 2rem; }
+    h1 { margin: 0 0 .5rem; font-size: clamp(1.8rem, 4vw, 2.7rem); }
+    .subtitle { color: var(--muted); margin: 0; }
+    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 1.5rem; }
+    .card {
+      background: color-mix(in srgb, var(--card) 85%, black 15%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    h2 { margin-top: 0; font-size: 1.1rem; color: var(--accent2); }
+    h3 { margin-bottom: .5rem; font-size: 1rem; color: var(--accent); }
+    ul { margin: .5rem 0 0 1.1rem; padding: 0; }
+    li { margin-bottom: .35rem; }
+    .chip {
+      display: inline-block;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: .2rem .6rem;
+      margin-right: .4rem;
+      margin-bottom: .4rem;
+      color: var(--muted);
+      font-size: .85rem;
+    }
+    .note { color: var(--muted); font-size: .95rem; }
+    .full { margin-top: 1rem; }
+    .score li { list-style: none; margin-left: -1rem; }
+  </style>
 </head>
 <body>
+  <main class="container">
+    <header>
+      <h1>Marka Vekili için Resmi Marka Bülteni Tarama ve Ön Benzerlik Tespit Asistanı</h1>
+      <p class="subtitle">Nihai ürün tanımı, kapsam, modüller, veri modelleri ve MVP kararları.</p>
+      <div class="full">
+        <span class="chip">PDF İçe Aktarma</span>
+        <span class="chip">Bülten İndirme</span>
+        <span class="chip">Parser</span>
+        <span class="chip">Benzerlik Motoru</span>
+        <span class="chip">Seçici AI Desteği</span>
+      </div>
+    </header>
 
-<!-- HERO -->
-<header class="hero">
-  <div class="stars-canvas" id="stars"></div>
-  <div class="hero-content">
-    <div class="hero-kicker">Harran Dosyası</div>
-    <h1>Yıldızlara Bakan Son <em>Paganlar</em></h1>
-    <p class="hero-sub">Antik Mezopotamya'dan Abbasi saraylarına uzanan, Kur'an'da adı geçen ama kimliği hâlâ muamma olan bir topluluğun olağanüstü hikâyesi.</p>
-    <span class="scroll-hint"></span>
-  </div>
-</header>
+    <section class="grid">
+      <article class="card">
+        <h2>Ürün Amacı ve Hukuki Konum</h2>
+        <ul>
+          <li>Vekilin iş yükünü azaltır, zaman kazandırır.</li>
+          <li>Portföy markaları ile yeni bülten başvurularını karşılaştırır.</li>
+          <li><strong>Hukuki karar vermez</strong>; yalnızca incelemeye değer aday üretir.</li>
+          <li>Nihai değerlendirme her zaman vekile aittir.</li>
+        </ul>
+      </article>
 
-<!-- ARTICLE -->
-<article class="article-body">
+      <article class="card">
+        <h2>Kapsam (Dahil / Hariç)</h2>
+        <h3>Dahil</h3>
+        <ul>
+          <li>PDF’den otomatik marka alanı çıkarımı</li>
+          <li>Ayda iki kez son işlenmemiş Resmi Marka Bülteni kontrolü</li>
+          <li>Sadece yeni başvuruların işlenmesi</li>
+          <li>İbare + sınıf + mal/hizmet eşleştirmesi</li>
+        </ul>
+        <h3>Hariç</h3>
+        <ul>
+          <li>Görsel marka eşleştirmesi</li>
+          <li>Tam otomatik hukuki sonuç / itiraz metni</li>
+          <li>Tüm PDF’yi LLM’e serbest analiz ettirme</li>
+        </ul>
+      </article>
 
-  <!-- 1 -->
-  <div class="section">
-    <span class="section-number">I — Kimlik Bilmecesi</span>
-    <h2>Kur'an'daki İsim, Tarih Sahnesindeki Hayalet</h2>
-    <p class="lead">Bakara Suresi'nin 62. ayetinde, Yahudiler ve Hristiyanlarla birlikte anılan bir topluluk var: <strong>Sâbiîler</strong>. Kim olduklarını kesin olarak kimse bilmiyor. Bu belirsizlik, tarihte eşi görülmemiş bir hayatta kalma stratejisinin kapısını açtı.</p>
-    <p>En erken dönem İslam tefsir alimleri bile bu ismin kimi işaret ettiği konusunda anlaşamadı. Kimileri Irak'ın bataklıklarındaki vaftiz mezhebini — bugün hâlâ yaşayan <strong>Mandeanları</strong> — kastettiklerini söyledi. Kimileri ise tamamen farklı bir gruba, Güney Arabistan'ın eski Sebe halkına işaret etti. Ancak tarih sahnesinde bu ismi en cesur biçimde sahiplenen grup, ne Mandeanlar ne de Sebeliler oldu. Onlar, bugünkü Şanlıurfa'nın hemen güneyinde, kervan yollarının kavşağında duran bir şehrin sakinleriydi: <strong>Harran</strong>.</p>
-  </div>
+      <article class="card">
+        <h2>Çekirdek Akış</h2>
+        <ul>
+          <li><strong>A:</strong> Başvuru PDF yükleme ve portföy oluşturma</li>
+          <li><strong>B:</strong> Bülten takip / indirme / tekil işleme</li>
+          <li><strong>C:</strong> Bülten temizleme ve kayıt segmentasyonu</li>
+          <li><strong>D:</strong> Benzerlik taraması ve skor üretimi</li>
+          <li><strong>E:</strong> Adayların vekil tarafından notlanması ve etiketlenmesi</li>
+        </ul>
+      </article>
 
-  <div class="sep">☽</div>
+      <article class="card">
+        <h2>Ana Modüller</h2>
+        <ul>
+          <li>Başvuru evrakı içe aktarma</li>
+          <li>Portföy yönetimi</li>
+          <li>Bülten izleme</li>
+          <li>Bülten parser</li>
+          <li>Benzerlik motoru</li>
+          <li>Sonuç ve inceleme ekranı</li>
+          <li>AI yardımcı değerlendirme (destek modülü)</li>
+        </ul>
+      </article>
 
-  <!-- 2 -->
-  <div class="section">
-    <span class="section-number">II — Kader Anı</span>
-    <h2>Halife'nin Ültimatomu ve Dahice Bir Blöf</h2>
-    <p>Yıl 830. Abbasi Halifesi Memun, Bizans seferine giderken Harran'dan geçiyor. Şehrin halkıyla karşılaşınca soruyor: "Hangi dindensiniz?" Harranlılar ne Müslüman, ne Hristiyan, ne de Yahudi. Hâlâ eski geleneklerini sürdüren, gök cisimlerine ibadet eden bir topluluk. Halife'nin yanıtı sert: ya tanınan dinlerden birini seçecekler ya da seferden döndüğünde ölümle yüz yüze gelecekler.</p>
-    <p>Panik içindeki Harranlılar bir İslam hukukçusuna danışıyor. Hukukçu, Kur'an'da adı geçen ama kimliği belirsiz olan "Sâbiîler" kavramına dikkat çekiyor. Kimse gerçek Sâbiîlerin kim olduğunu bilmediğine göre, bu boşluğu doldurmak mümkün. Harranlılar bu kimliği üstleniyor. Tarih boyunca belki de en etkili "kimlik hırsızlığı" böyle gerçekleşiyor: soyut bir Kur'an kavramı, somut bir topluluğun hayatta kalma aracına dönüşüyor.</p>
+      <article class="card">
+        <h2>Parser Tasarımı</h2>
+        <ul>
+          <li>Ön temizlik: başlık/altlık/sayfa numarası/ayırıcı temizliği</li>
+          <li>Bölüm ayrımı: yeni başvuru vs düzeltmeler vs diğer</li>
+          <li>Segmentasyon: her yeni <code>(210)</code> ile kayıt başlangıcı</li>
+          <li>Alan çıkarımı: <code>(210) (220) (731) (540) (511) (510)</code> + vekil</li>
+          <li>Parse güven puanı: yüksek / orta / düşük</li>
+        </ul>
+      </article>
 
-    <div class="pull-quote">
-      <p>"Kur'an'daki kimliği belirsiz bir isim, bir halkın varoluş sigortası oldu. Tarih, bazen kelimelerin gücünü kılıçların gücünden daha iyi hatırlar."</p>
-    </div>
-  </div>
+      <article class="card">
+        <h2>Puanlama ve Etiketleme</h2>
+        <ul class="score">
+          <li>İbare benzerliği: 0–3</li>
+          <li>Mal/hizmet yakınlığı: 0–3</li>
+          <li>Sınıf yakınlığı: 0–3</li>
+          <li>Toplam skor: 0–9 (hukuki karar değil, önceliklendirme)</li>
+        </ul>
+        <p class="note">Sonuç etiketi: düşük öncelik / gözden geçir / güçlü aday / yüksek öncelik.</p>
+      </article>
 
-  <div class="sep">✦</div>
+      <article class="card">
+        <h2>MVP Kapsamı</h2>
+        <ul>
+          <li>Toplu PDF yükleme ve otomatik veri çıkarma</li>
+          <li>Kullanıcı onayıyla portföy oluşturma</li>
+          <li>Son bülteni indirme ve yeni başvuru ayıklama</li>
+          <li>İbare + sınıf + mal/hizmet eşleşmesi</li>
+          <li>Aday listeleme + not + etiket</li>
+        </ul>
+      </article>
 
-  <!-- 3 -->
-  <div class="section">
-    <span class="section-number">III — Ay Tanrısının Şehri</span>
-    <h2>Harran: Yıldızların Yeryüzündeki Tapınağı</h2>
-    <p>Peki, Halife'nin karşısında duran bu insanlar aslında neye inanıyordu? Harran, binlerce yıl boyunca Mezopotamya'nın en önemli kült merkezlerinden biriydi. Şehrin kalbinde <strong>Ay Tanrısı Sin</strong>'e adanmış devasa bir tapınak yükseliyordu. Asurlular zamanından beri ayakta duran bu tapınak, bölgenin ruhani çekim merkeziydi.</p>
-    <p>Ama Sabiîlerin inancı basit bir "yıldızlara tapınma" değildi. 9. yüzyıl filozofu <strong>El-Kindî</strong>'nin aktardığına göre, Sabiîler her şeyin üstünde tek ve aşkın bir <strong>"İlk Neden"</strong>e — bir tür Yüce Yaratıcı'ya — inanıyordu. Gezegenler ve gök cisimleri ise bu Yüce Gücün iradesini dünyada yürüten aracılardı. Kurbanlar ve dualar doğrudan Tanrı'ya değil, bu göksel aracılara yöneltiliyordu. Yani dışarıdan bakınca çok tanrıcı görünen inanç, içeriden bakıldığında sofistike bir kozmolojik hiyerarşiydi.</p>
-    <p>Bu ikili yapı modern araştırmacıları da şaşırtmaya devam ediyor. Hristiyan ve Yahudi kaynaklar Sabiîleri açıkça "pagan" olarak tanımlarken, El-Kindî'nin aktardığı iç perspektif şaşırtıcı derecede monoteist unsurlar barındırıyor: tevhid inancı, peygamberlik kavramı, günde üç vakit namaz, yılda otuz gün oruç, hatta domuz eti yasağı. Bu benzerlikler tesadüf müydü, yoksa İslami çevreye uyum sağlamak için bilinçli bir asimilasyon stratejisi mi?</p>
-
-    <div class="info-box">
-      <div class="info-box-title">Ritüellerden Bir Kesit</div>
-      <p>El-Nedim'in <em>Fihrist</em> adlı eserine göre Sabiîlerin yıllık takvimi ritüellerle doluydu. Nisan ayında Ay ilahına boğa kurban edilir, Şubat'ta Güneş'e adanmış yedi günlük oruç tutulurdu. Ağustos ayında ise bir rahip alevli oklar fırlatır, okları dört ayak üzerinde yürüyerek geri getirirdi — anlamı bugün hâlâ tam olarak çözülememiş bir tören.</p>
-    </div>
-  </div>
-
-  <div class="sep">☽</div>
-
-  <!-- 4 -->
-  <div class="section">
-    <span class="section-number">IV — Peygamber Hamleleri</span>
-    <h2>Hermes, İdris ve Pisagor: Ustalıklı Bir Soy Ağacı</h2>
-    <p>Harranlılar sadece "Sâbiî" kimliğini benimsemekle kalmadı; inançlarına İslam dünyasında meşruiyet kazandıracak karmaşık bir entelektüel soy ağacı inşa etti. Peygamberleri olarak <strong>Hermes Trismegistus</strong>'u — "Üç Kere Yüce Hermes"i — gösterdiler.</p>
-    <p>Bu seçim stratejik bir dehaydı. Hermes, Antik Mısır'ın bilgelik tanrısı <strong>Thoth</strong> ile Yunan tanrısı <strong>Hermes</strong>'in birleşiminden doğan efsanevi bir bilge figürdü. İslam dünyasında ise Hermes, Kur'an'da adı geçen peygamber <strong>İdris</strong> ile özdeşleştiriliyordu. Dolayısıyla Sabiîler, peygamberleri olarak Hermes'i işaret ederek hem kadim bir bilgelik geleneğine hem de Kur'an'ın tanıdığı bir peygambere bağlanmış oluyorlardı. Tek bir hamleyle iki meşruiyet kaynağı birden.</p>
-    <p>Ama soy ağacı burada bitmedi. Sabiîler, <strong>Pisagor</strong> ve <strong>Platon</strong> gibi antik dünyanın en saygın düşünürlerini de manevi ataları olarak sahiplendi. El-Kindî'nin aktardığı ilginç bir detay bu bağlantıyı güçlendiriyor: Sabiîlerin diyet yasakları arasında <strong>bakla yememek</strong> vardı. Bakladan kaçınmak, antik dünyada Pisagorcu yaşam tarzının en bilinen ve en özgün kuralıydı. Tesadüf demek güç; bu topluluk, kendini bilinçli olarak antik dünyanın en prestijli entelektüel geleneğine bağlıyordu.</p>
-  </div>
-
-  <div class="sep">✦</div>
-
-  <!-- 5 -->
-  <div class="section">
-    <span class="section-number">V — Sarraftan Saraya</span>
-    <h2>Sâbit bin Kurre: Harran'ın Parlayan Yıldızı</h2>
-    <p>Sabiîlerin yalnızca hayatta kalan değil, parlayan bir topluluk olduğunun en büyük kanıtı bir isimde gizli: <strong>Sâbit bin Kurre</strong>. 836'da Harran'da doğan Sâbit, başlangıçta sıradan bir sarraftı — çarşıda para bozuyordu. Ama Bağdat'tan geçen matematikçi <strong>Muhammed bin Musa</strong>, genç sarrafın olağanüstü dil yeteneğini ve zekâsını fark etti. Sâbit'i yanına alarak Bağdat'a götürdü.</p>
-    <p>Olan oldu. Harran'ın anonim sarrafı, İslam dünyasının en parlak âlimlerinden birine dönüştü. Sâbit, Yunancadan Arapçaya <strong>Öklid</strong>, <strong>Arşimet</strong>, <strong>Apollonius</strong> ve <strong>Ptolemaios</strong>'un eserlerini çevirdi. Ama basit bir tercüman değildi; çevirdiği metinleri eleştirel gözle analiz etti ve kendi özgün katkılarını ekledi. Astronomide Ptolemaios sistemini ilk sorgulayanlar arasında yer aldı. Matematikteki "dost sayılar" kuralı yüzyıllar sonra Euler tarafından genelleştirildi. Mekanikte statiğin kurucularından biri olarak kabul edildi.</p>
-    <p>Abbasi Halifesi Mu'tadıd'ın saray astronomu ve kişisel dostu olan Sâbit, 150'den fazla eser bırakarak 901'de Bağdat'ta öldü. Oğlu <strong>Sinan</strong> ünlü bir hekim, torunu <strong>İbrahim</strong> ise önemli bir matematikçi oldu. Harran'ın yıldız çocukları, Bağdat'ın entelektüel göğünü aydınlatmaya nesiller boyu devam etti.</p>
-
-    <div class="pull-quote">
-      <p>"Yıldızlara tapan bir topluluktan çıkan bir sarraf, yıldızların hareketini hesaplayan çağının en büyük astronomlarından biri oldu. Harran'ın inancı ile bilimi arasındaki sınır, belki de hiç var olmadı."</p>
-    </div>
-  </div>
-
-  <div class="sep">☽</div>
-
-  <!-- 6 -->
-  <div class="section">
-    <span class="section-number">VI — Romantik Teori</span>
-    <h2>Harran, Atina Akademisi'nin Mirasçısı mıydı?</h2>
-    <p>20. yüzyıl akademisyeni <strong>Michel Tardieu</strong>'nun çarpıcı bir teorisi var: 529'da İmparator Justinianus Atina'daki Neoplatonist Akademi'yi kapattığında, <strong>Damascius</strong> ve <strong>Simplicius</strong> gibi son filozoflar Roma İmparatorluğu'ndan kaçarak önce Sasani Pers topraklarına sığındı. Tardieu'ya göre bu filozoflar birkaç yıl sonra geri dönerek pagan geleneklerini koruyan Harran'a yerleşti. Böylece Harran, Atina Akademisi'nin entelektüel ve ruhani devamı haline geldi.</p>
-    <p>Teoriyi destekleyen bir ipucu da var: 10. yüzyıl tarihçisi <strong>El-Mesûdî</strong>, Harran'daki Sabiîlerin toplanma yerinin kapısında Platon'a ait Süryanice bir söz gördüğünü aktarıyor: <em>"Kendi özünü bilen, ilahileşir."</em></p>
-    <p>Ama günümüz araştırmacılarının çoğu — başta <strong>Kevin van Bladel</strong> olmak üzere — bu teoriyi romantik bir kurgu olarak değerlendiriyor. Atinalı filozofların Harran'a yerleştiğine dair doğrudan bir kanıt yok. Bir tapınak kapısında Platon sözü bulunması, orada bir felsefe okulu olduğunu kanıtlamaz. Harran'ın Neoplatonizmden etkilenmiş olması muhtemel, ama Atina'nın doğrudan devamı olduğu iddiası kanıt yetersizliğinden öteye gidemiyor.</p>
-  </div>
-
-  <div class="sep">✦</div>
-
-  <!-- 7 -->
-  <div class="section">
-    <span class="section-number">VII — Son Perde</span>
-    <h2>Bir Medeniyetin Sessiz Çöküşü</h2>
-    <p>Sabiîler, 11. yüzyıla kadar varlıklarını sürdürdü. Ancak Ortadoğu'nun siyasi çalkantıları, artan dini hoşgörüsüzlük ve nihayetinde 1251'deki <strong>Moğol istilası</strong> topluluğun sonunu getirdi. Tapınaklar yıkıldı, halk ya göç etti ya da İslam'a geçti. Bağdat'taki Sâbit bin Kurre hanedanının torunları da zamanla Müslüman oldu.</p>
-    <p>Bazı araştırmacılar, Harran'dan doğuya göç eden son Sabiîlerin, Mardin ve Musul çevresine yerleşerek daha sonra <strong>Yezidi</strong> topluluğunun oluşumuna katkı sağladığını ileri sürüyor. Yezidi inancında hâlâ gözlemlenebilen bazı astral unsurlar ve ritüeller, bu bağlantının tamamen temelsiz olmadığına işaret ediyor.</p>
-    <p>Bugün Harran'ı ziyaret ettiğinizde arı kovanı evlerin ve kale kalıntılarının ötesinde, bin yıl önce gökyüzüne bakarak evreni anlamaya çalışan bir medeniyetin sessiz yankısını duyarsınız. Sabiîler, ne basit "yıldızlara tapanlar"dı ne de sıradan bir pagan kalıntısı. Antik Mezopotamya dininin, Helenistik felsefenin ve İslami siyasi gerçekliğin kesişim noktasında şekillenen, hayatta kalmayı bir sanata dönüştüren, senkretik ve olağanüstü sofistike bir topluluktu.</p>
-    <p>Tarihin en büyük ironisi belki de şu: yıldızlara bakarak evreni anlamaya çalışan bu insanlar, İslam'ın Altın Çağı'ndaki büyük bilimsel sıçramaya zemin hazırlayan çevirmenler, matematikçiler ve astronomlar yetiştirdi. Onların mirası, bugün modern bilimin temellerinde — fark etmesek de — hâlâ parlıyor.</p>
-  </div>
-
-</article>
-
-<footer class="article-footer">
-  <div class="moon-glyph"></div>
-  <p>Harran'ın yıldız çocuklarının hikâyesi, tarihin dipnotlarında<br>keşfedilmeyi bekleyen en büyüleyici sayfalardan biri olmaya devam ediyor.</p>
-</footer>
-
-<script>
-  // Star field
-  const canvas = document.getElementById('stars');
-  for (let i = 0; i < 120; i++) {
-    const s = document.createElement('div');
-    s.className = 'star';
-    s.style.left = Math.random() * 100 + '%';
-    s.style.top = Math.random() * 100 + '%';
-    s.style.setProperty('--dur', (2 + Math.random() * 4) + 's');
-    s.style.setProperty('--max-op', (0.2 + Math.random() * 0.6).toFixed(2));
-    s.style.animationDelay = (Math.random() * 5) + 's';
-    if (Math.random() > 0.85) {
-      s.style.width = '3px';
-      s.style.height = '3px';
-      s.style.boxShadow = '0 0 4px 1px rgba(201,168,76,0.3)';
-    }
-    canvas.appendChild(s);
-  }
-
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) e.target.classList.add('visible');
-    });
-  }, { threshold: 0.15 });
-
-  document.querySelectorAll('.section').forEach(s => observer.observe(s));
-
-  // === WIX IFRAME AUTO-HEIGHT ===
-  // Bu kod, Wix iframe icinde calistiginda yuksekligi otomatik ayarlar
-  function notifyParentHeight() {
-    const height = document.documentElement.scrollHeight;
-    window.parent.postMessage({ type: 'setHeight', height: height }, '*');
-  }
-  // Sayfa yuklendiginde ve resize'da bildir
-  window.addEventListener('load', () => setTimeout(notifyParentHeight, 500));
-  window.addEventListener('resize', notifyParentHeight);
-  // MutationObserver ile dinamik degisiklikleri de yakala
-  const mo = new MutationObserver(notifyParentHeight);
-  mo.observe(document.body, { childList: true, subtree: true });
-</script>
-
+      <article class="card">
+        <h2>Teknik Yaklaşım</h2>
+        <ul>
+          <li>Yerel çalışan web uygulaması (tek kullanıcı, vekil odaklı)</li>
+          <li>Çekirdek omurga: parser + kural tabanlı filtre + veri modeli</li>
+          <li>AI yalnızca seçili vakalarda yardımcı katman</li>
+          <li>Başarı metriği: bülten inceleme süresinde anlamlı azalma</li>
+        </ul>
+      </article>
+    </section>
+  </main>
 </body>
 </html>
